@@ -1,0 +1,13 @@
+{
+  "applinks": {
+    "details": [
+      {
+        "appIDs": ["N6MJ3755BB.de.creablo.murmeltier"],
+        "components": [
+          { "/": "/k", "comment": "Verknüpfen-Link von Murmeltier" },
+          { "/": "/k/*", "comment": "Verknüpfen-Link von Murmeltier" }
+        ]
+      }
+    ]
+  }
+}

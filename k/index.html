@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Murmeltier – verknüpfen</title>
+<link rel="stylesheet" href="/style.css">
+</head>
+<body>
+<main>
+  <img src="/murmel.png" alt="" width="114" height="120">
+  <h1>Murmeltier</h1>
+  <p id="who">Jemand möchte sich in Murmeltier mit dir verknüpfen.</p>
+  <a class="button" id="open" href="#">In Murmeltier öffnen</a>
+  <p class="muted">Noch keine App? Murmeltier gibt es als Test über TestFlight – frag nach einer Einladung.</p>
+  <div class="card">
+    <p class="muted">Oder in Murmeltier unter Einstellungen → „Person verknüpfen“ diese ID eingeben:</p>
+    <code id="id"></code>
+    <button id="copy" type="button">ID kopieren</button>
+  </div>
+</main>
+<script>
+  // The link is …/k/#<id>/<name>: after the #, so ID and name never reach the server.
+  const [id = "", name = ""] = location.hash.slice(1).split("/").map(decodeURIComponent);
+  if (!/^_[0-9a-f]{32}$/.test(id)) {
+    document.getElementById("who").textContent = "Dieser Link ist unvollständig. Lass ihn dir noch einmal aus Murmeltier schicken.";
+    document.getElementById("open").remove();
+    document.querySelector(".card").remove();
+  } else {
+    if (name) document.getElementById("who").textContent = name + " möchte sich in Murmeltier mit dir verknüpfen.";
+    document.getElementById("open").href = "murmeltier://kontakt?id=" + encodeURIComponent(id) + "&name=" + encodeURIComponent(name);
+    document.getElementById("id").textContent = id;
+    document.getElementById("copy").onclick = async () => {
+      try { await navigator.clipboard.writeText(id); document.getElementById("copy").textContent = "Kopiert"; } catch {}
+    };
+  }
+</script>
+</body>
+</html>
